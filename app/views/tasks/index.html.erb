@@ -1,0 +1,40 @@
+<div class="main posts-index">
+  <div class="container">
+    <% @tasks.each do |task| %>
+      <div class="posts-index-item">
+        <div class="post-left">
+
+          <% @user = User.find_by(id: task.creater) %>
+        
+          <img src="<%= "/task_images/#{task.image_name}" %>">
+        </div>
+        <div class="post-right">
+          <div class="post-user-name">
+            <%= link_to("登録ユーザー：#{@user.name}","/users/#{@user.id}") %>
+          </div>
+          <div>
+          <%= link_to(task.content, "/tasks/#{task.id}") %>
+          </div>
+        
+          <div class="post-details">
+            <%= "担当者：#{task.doer}" %>
+          </div>
+          <div class="post-details">
+            <%= "納期：#{task.deadline}" %>
+          </div>      
+          <div class="post-details">
+            <%= "登録日時：#{task.created_at}" %>
+          </div>
+          <div class="post-details">
+            <%= "更新日時：#{task.updated_at}" %>
+          </div> 
+        </div>
+        
+        <div class="post-menus">
+        <%= link_to("編集", "/tasks/#{task.id}/edit") %>
+        <%= link_to("削除", "/tasks/#{task.id}/destroy",{method:"post"}) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

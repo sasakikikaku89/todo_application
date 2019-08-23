@@ -1,0 +1,30 @@
+<div class="main posts-new">
+  <div class="container">
+    <h1 class="form-heading">編集する</h1>
+    <%= form_tag("/tasks/#{@task.id}/update",{multipart: true}) do %>
+      <div class="form">
+        <div class="form-body">
+
+          <%# エラーメッセージの表示 %>
+          <% @task.errors.full_messages.each do |message| %>
+            <div class="form-error">
+              <%= message %>
+            </div>
+          <% end %>
+
+          ▼登録した人
+          <input name="creater" value="<%= @task.creater %>">
+          ▼タスク内容
+          <textarea name="content"><%= @task.content %></textarea>
+          ▼担当者
+          <input name="doer" value="<%= @task.doer %>">
+          ▼納期
+          <input name="deadline" type="date" value="<%= @task.deadline %>">
+          ▼イメージ画像
+          <input name="image" type="file">
+          <input type="submit" value="保存">
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

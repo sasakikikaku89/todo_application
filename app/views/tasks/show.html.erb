@@ -1,0 +1,37 @@
+<div class="main posts-show">
+  <div class="container">
+    <div class="posts-show-item">
+      
+      <div class="post-user-name">
+        <!-- ここにユーザー名とタスク画像を表示してください -->
+        <img src="<%= "/task_images/#{@task.image_name}" %>">
+        <%= link_to("登録ユーザー：#{@user.name}","/users/#{@user.id}") %>
+      </div>
+      
+      <p>
+        <%= @task.content %>
+      </p>
+
+      <div class="post-time">
+        <%= "担当者：#{@task.doer}" %>
+      </div>
+      <div class="post-time">
+        <%= "納期：#{@task.deadline}" %>
+      </div>      
+      <div class="post-time">
+        <%= "登録日時：#{@task.created_at}" %>
+      </div>
+      <div class="post-time">
+        <%= "更新日時：#{@task.updated_at}" %>
+      </div>
+
+      <%# 編集リンク %>
+      <div class="post-menus">
+      <%= link_to("編集", "/tasks/#{@task.id}/edit") %>
+      <%= link_to("削除", "/tasks/#{@task.id}/destroy",{method:"post"}) %>
+      </div>
+
+
+    </div>
+  </div>
+</div>

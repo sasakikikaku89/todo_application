@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyString
+  deadline: 2019-08-21
+  image_name: MyString
+  doer: MyString
+
+two:
+  content: MyString
+  deadline: 2019-08-21
+  image_name: MyString
+  doer: MyString
