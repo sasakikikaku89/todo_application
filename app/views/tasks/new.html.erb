@@ -18,14 +18,17 @@
          %>
           ▼タスク内容
           <textarea name="content"><%= @task.content %></textarea>
+
           ▼担当者
           <input name="doer" value="<%= @task.doer %>">
+
           ▼納期
           <input name="deadline" type="date" value="<%= @task.deadline %>">
           ▼イメージ画像
           <input name="image" type="file">
   
           <input type="submit" value="登録">
+          
         </div>
       </div>
     <% end %>

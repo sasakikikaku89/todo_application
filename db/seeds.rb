@@ -6,6 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Task.create(content: "お片付け",doer:"うり")
-Task.create(content: "Rails学習",doer:"俺")
-Task.create(content: "CFO会議",doer:"みんな")
+User.create(name: "ひこまる",id:1,email:"test@test.com",password:"test")
+User.create(name: "うりおんず",id:2,email:"test2@test.com",password:"test2")
+User.create(name: "チュッチュボーイ",id:3,email:"test3@test.com",password:"test3")
+User.create(name: "ママ",id:4,email:"test4@test.com",password:"test4")
+

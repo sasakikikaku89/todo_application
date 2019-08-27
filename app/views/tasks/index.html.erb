@@ -1,5 +1,11 @@
 <div class="main posts-index">
   <div class="container">
+    
+    <ul class="posts-tabs">
+      <li class="active"><%= sort_link(@q,:deadline,"【納期】で並び替え") %></li>
+      <li><%= link_to("詳細検索", "#") %></li>
+    </ul>
+
     <% @tasks.each do |task| %>
       <div class="posts-index-item">
         <div class="post-left">

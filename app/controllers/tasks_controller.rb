@@ -2,8 +2,10 @@
         before_action :authenticate_user
 
     def index
-        @tasks = Task.all.order(created_at: :desc)
-        
+        # @tasks = Task.all.order(created_at: :desc)  
+        @q = Task.ransack(params[:q])
+        @tasks = @q.result(distinct: true)
+
     end
 
     def show
@@ -22,14 +24,21 @@
             content: params[:content],
             doer: params[:doer],
             deadline: params[:deadline],
-            image_name: "default_task.jpg")        
-        if params[:image]
-            @task.image_name = "#{@task.id}.jpg"
+            image_name: "default_task.jpg")    
+
+        # if params[:image]
+        #     @task.image_name = "#{@task.id}.jpg"
+        #     image = params[:image]
+        #     File.binwrite("public/task_images/#{@task.image_name}",image.read)
+        # else
+        #     @task.image_name = "default_task.jpg"
+        # end        
+    
+        if @task.save && params[:image]
             image = params[:image]
             File.binwrite("public/task_images/#{@task.image_name}",image.read)
-        end        
-    
-        if @task.save
+            @task.image_name = "#{@task.id}.jpg"
+            
             flash[:notice] = "タスクを登録しました"
             redirect_to("/tasks/index")
         else
@@ -43,8 +52,8 @@
     end
 
     def update
-        @task = Task.find_by(id: params[:id])      
-        @task.creater = params[:creater]
+        @task = Task.find_by(id: params[:id])    
+        @task.creater = @current_user.id
         @task.content = params[:content]
         @task.doer = params[:doer]
         @task.deadline = params[:deadline]

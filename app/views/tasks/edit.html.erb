@@ -12,8 +12,8 @@
             </div>
           <% end %>
 
-          ▼登録した人
-          <input name="creater" value="<%= @task.creater %>">
+          <%# ▼登録した人
+           %>
           ▼タスク内容
           <textarea name="content"><%= @task.content %></textarea>
           ▼担当者
@@ -21,7 +21,8 @@
           ▼納期
           <input name="deadline" type="date" value="<%= @task.deadline %>">
           ▼イメージ画像
-          <input name="image" type="file">
+          <input name="image" type="file" value="<%= @task.image_name %>">
+
           <input type="submit" value="保存">
         </div>
       </div>
