@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # 詳細検索の件
+  get "tasks/index/search" => "tasks#search"
+
   post "logout" => "users#logout"
 
   post "login" => "users#login"
@@ -17,7 +20,8 @@ Rails.application.routes.draw do
   get "tasks/new" => "tasks#new"
   get "tasks/:id" => "tasks#show"
   post "tasks/create" => "tasks#create"
-
+  
+  
   get "tasks/:id/edit" => "tasks#edit"
   post "tasks/:id/update" => "tasks#update"
 

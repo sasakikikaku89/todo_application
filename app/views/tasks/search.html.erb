@@ -1,11 +1,34 @@
 <div class="main posts-index">
   <div class="container">
     
+    <%# cssは「tasks/index」を踏襲。一部のみtasks/searchに記載 %>
+
     <ul class="posts-tabs">
-      <li class="active"><%= sort_link(@q,:deadline,"【納期】で並び替え") %></li>
-      <li><%= link_to("詳細検索", "/tasks/index/search") %></li>
+      <li><%= link_to("【納期】で並び替え","/tasks/index") %></li>
+      <li class="active a">詳細検索</li>
     </ul>
-    
+
+    <%# 検索機能のブロック %>
+    <div class="posts-searchbox">
+      <%= search_form_for @q, url: tasks_index_path do |f| %>
+      <div class="posts-searchbox-item">
+        <%= f.label :doer, "▼担当者から探す" %>
+        <%= f.search_field :doer_cont,class: 'input' %>
+      </div>
+      <div class="posts-searchbox-item">
+        <%= f.label :deadline , "▼納期の範囲を指定する"%><br>
+        <%= f.date_field :deadline_gteq ,class: 'input-deadline' %> 日から〜
+        <%= f.date_field :deadline_lteq ,class: 'input-deadline' %> 日まで<br>
+      </div>
+      
+      <div class="posts-searchbox-item">
+        <%= f.label :creater, "▼登録者から探す" %>
+        <%= f.search_field :creater_cont,class: 'input' %>
+      </div>
+        <%= f.submit "検索", class: 'input search-btn'%>
+      <% end %>  
+    </div>
+
     <% @tasks.each do |task| %>
       <div class="posts-index-item">
         <div class="post-left">
