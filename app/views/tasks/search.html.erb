@@ -12,34 +12,33 @@
     <div class="posts-searchbox">
       <%= search_form_for @q, url: tasks_index_path do |f| %>
       <div class="posts-searchbox-item">
-        <%= f.label :doer, "▼担当者から探す" %>
-        <%= f.search_field :doer_cont,class: 'input' %>
+        <%= f.label :id_eq, "▼担当者から探す" %>
+        <%= f.collection_select :id_eq, @tasks, :id, :doer, {:include_blank => '指定なし'}, {class: 'input-selectbox'}%>
       </div>
       <div class="posts-searchbox-item">
         <%= f.label :deadline , "▼納期の範囲を指定する"%><br>
         <%= f.date_field :deadline_gteq ,class: 'input-deadline' %> 日から〜
         <%= f.date_field :deadline_lteq ,class: 'input-deadline' %> 日まで<br>
       </div>
-      
       <div class="posts-searchbox-item">
-        <%= f.label :creater, "▼登録者から探す" %>
-        <%= f.search_field :creater_cont,class: 'input' %>
+        <%= f.label :user_id_eq, "▼登録者から探す" %>
+        <%= f.collection_select :user_id_eq, @users, :id, :name, {:include_blank => '指定なし'}, {class: 'input-selectbox'}%>
       </div>
         <%= f.submit "検索", class: 'input search-btn'%>
-      <% end %>  
+      <% end %> 
     </div>
 
-    <% @tasks.each do |task| %>
+    <% @search_tasks.each do |task| %>
       <div class="posts-index-item">
         <div class="post-left">
 
-          <% @user = User.find_by(id: task.creater) %>
+          <%# <% @user = User.find_by(id: task.user_id) %> 
         
           <img src="<%= "/task_images/#{task.image_name}" %>">
         </div>
         <div class="post-right">
           <div class="post-user-name">
-            <%= link_to("登録ユーザー：#{@user.name}","/users/#{@user.id}") %>
+            <%= link_to("登録ユーザー：#{task.user.name}","/users/#{task.user_id}") %>
           </div>
           <div>
           <%= link_to(task.content, "/tasks/#{task.id}") %>

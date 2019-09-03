@@ -7,17 +7,17 @@
         @tasks = @q.result(distinct: true)
     end
 
-    def search
-        # @tasks = Task.all.order(created_at: :desc)  
+    def search 
         @q = Task.ransack(params[:q])
-        @tasks = @q.result(distinct: true)
-        
+        @users = User.all
+        @tasks = Task.all
+        @search_tasks = @q.result(distinct: true)
     end
 
 
     def show
         @task = Task.find_by(id: params[:id])
-        @user = User.find_by(id: @task.creater)
+        @user = User.find_by(id: @task.user_id)
 
     end
 
@@ -27,7 +27,7 @@
 
     def create
         @task = Task.new(
-            creater: @current_user.id,
+            user_id: @current_user.id,
             content: params[:content],
             doer: params[:doer],
             deadline: params[:deadline],
@@ -62,7 +62,7 @@
     
     def update
         @task = Task.find_by(id: params[:id])    
-        @task.creater = @current_user.id
+        @task.user_id = @current_user.id
         @task.content = params[:content]
         @task.doer = params[:doer]
         @task.deadline = params[:deadline]

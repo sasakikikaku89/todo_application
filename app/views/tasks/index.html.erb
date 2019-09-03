@@ -10,13 +10,14 @@
       <div class="posts-index-item">
         <div class="post-left">
 
-          <% @user = User.find_by(id: task.creater) %>
+          <%# アソシエーション対応済み %>
+          <%# <% @user = User.find_by(id: task.user_id) %> 
         
           <img src="<%= "/task_images/#{task.image_name}" %>">
         </div>
         <div class="post-right">
           <div class="post-user-name">
-            <%= link_to("登録ユーザー：#{@user.name}","/users/#{@user.id}") %>
+            <%= link_to("登録ユーザー：#{task.user.name}","/users/#{task.user_id}") %>
           </div>
           <div>
           <%= link_to(task.content, "/tasks/#{task.id}") %>
