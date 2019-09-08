@@ -9,12 +9,16 @@
           </div>
         <% end %>
       
-        <%= form_tag("/users/#{@user.id}/update") do %>
+        <%# <%= form_tag("/users/#{@user.id}/update") do %>
+        <%= form_with(model: @user, url:"/users/#{@user.id}/update" , local: true) do |form| %>
           <p>ユーザー名</p>
-          <input name="name" value="<%= @user.name %>">
+          <%= form.text_field :name,{class: "input"} %>
+          <%# <input name="name" value="<%= @user.name %>
+          
           <p>メールアドレス</p>
-          <input name="email" value="<%= @user.email %>">
-          <input type="submit" value="保存">
+          <%# <input name="email" value="<%= @user.email %>
+          <%= form.email_field :email,{class: "input"} %>
+          <%= form.submit "登録" , {class: "input"}%>
         <% end %>
         
       </div>

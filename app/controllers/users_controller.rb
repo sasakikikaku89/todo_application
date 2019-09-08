@@ -9,6 +9,12 @@
 
         def show
             @user = User.find_by(id: params[:id])
+            # @user = User.find_by(id: @task.user_id)
+        end
+
+        def my_tasks
+            @user = User.find_by(id: params[:id])
+            @my_tasks = Task.where(doer: @user.id)            
         end
 
         def new
@@ -16,11 +22,7 @@
         end
 
         def create
-            @user = User.new(
-                name: params[:name],
-                email: params[:email],
-                password: params[:password])
-
+            @user = User.new(user_params)
             if @user.save
                 session[:user_id] = @user.id
                 flash[:notice] = "ユーザー登録が完了しました"
@@ -36,10 +38,8 @@
 
         def update
             @user =  User.find_by(id: params[:id]) 
-            @user.name = params[:name]
-            @user.email = params[:email]
 
-            if @user.save
+            if @user.update(user_params)
                 flash[:notice] = "ユーザー情報を編集しました"
                 redirect_to("/users/#{@user.id}")
             else
@@ -76,5 +76,11 @@
               flash[:notice]="権限がありません"
               redirect_to("/tasks/index")
             end
+        end
+
+        private
+        def user_params
+            params.require(:user).permit(:name,:email,:password)
+            
         end
     end

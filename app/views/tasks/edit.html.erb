@@ -1,7 +1,8 @@
 <div class="main posts-new">
   <div class="container">
     <h1 class="form-heading">編集する</h1>
-    <%= form_tag("/tasks/#{@task.id}/update",{multipart: true}) do %>
+    <%# <%= form_tag("/tasks/#{@task.id}/update",{multipart: true}) do %>
+    <%= form_with(model: @task, url:"/tasks/#{@task.id}/update", local: true) do |form| %>
       <div class="form">
         <div class="form-body">
 
@@ -12,18 +13,21 @@
             </div>
           <% end %>
 
-          <%# ▼登録した人
-           %>
+          <%# ▼登録した人%>
           ▼タスク内容
-          <textarea name="content"><%= @task.content %></textarea>
+          <%= form.text_area :content,{class: "input"} %>
+          
           ▼担当者
-          <input name="doer" value="<%= @task.doer %>">
-          ▼納期
-          <input name="deadline" type="date" value="<%= @task.deadline %>">
-          ▼イメージ画像
-          <input name="image" type="file" value="<%= @task.image_name %>">
+          <%# <%= form.text_field :doer,{class: "input"} %>
+          <%= form.collection_select :doer, @user, :id, :name, {:include_blank => '選択してください'}, {class: 'input-new-selectbox'}%>
 
-          <input type="submit" value="保存">
+        
+          ▼納期
+          <%= form.date_field :deadline,{class: "input"} %>
+
+          ▼イメージ画像
+          <%= form.file_field :image, {class: "input"} %>
+          <%= form.submit "登録" , {class: "input"}%>
         </div>
       </div>
     <% end %>

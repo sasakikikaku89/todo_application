@@ -12,8 +12,10 @@
     <div class="posts-searchbox">
       <%= search_form_for @q, url: tasks_index_path do |f| %>
       <div class="posts-searchbox-item">
-        <%= f.label :id_eq, "▼担当者から探す" %>
-        <%= f.collection_select :id_eq, @tasks, :id, :doer, {:include_blank => '指定なし'}, {class: 'input-selectbox'}%>
+        <%= f.label :doer, "▼担当者から探す" %>
+        <%# <%= f.collection_select :doer_eq, @tasks.group(:doer), :doer, :doer, {:include_blank => '指定なし'}, {class: 'input-selectbox'}%> 
+        <%= f.collection_select :doer_eq, @users, :id, :name, {:include_blank => '指定なし'}, {class: 'input-selectbox'}%>
+
       </div>
       <div class="posts-searchbox-item">
         <%= f.label :deadline , "▼納期の範囲を指定する"%><br>
@@ -48,13 +50,13 @@
             <%= "担当者：#{task.doer}" %>
           </div>
           <div class="post-details">
-            <%= "納期：#{task.deadline}" %>
+            <%= "納期：#{task.deadline.strftime("%Y年%m月%d日") }" %>
           </div>      
           <div class="post-details">
-            <%= "登録日時：#{task.created_at}" %>
+            <%= "登録日時：#{task.created_at.strftime("%Y年%m月%d日 %H時%M分") }" %>
           </div>
           <div class="post-details">
-            <%= "更新日時：#{task.updated_at}" %>
+            <%= "更新日時：#{task.updated_at.strftime("%Y年%m月%d日 %H時%M分") }" %>
           </div> 
         </div>
         

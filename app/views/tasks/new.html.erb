@@ -1,7 +1,8 @@
 <div class="main posts-new">
   <div class="container">
     <h1 class="form-heading">タスク化する</h1>
-    <%= form_tag("/tasks/create",{multipart: true}) do %>
+    <%# <%= form_tag("/tasks/create",{multipart: true}) do  %>
+    <%= form_with(model: @task, url:'/tasks/create', local: true) do |form| %>
       <div class="form">
         <div class="form-body">
 
@@ -17,18 +18,26 @@
           <input name="user_id" value=""> 
          %>
           ▼タスク内容
-          <textarea name="content"><%= @task.content %></textarea>
-
+          <%# <textarea name="content"><%= @task.content</textarea> %>
+          <%= form.text_area :content,{class: "input"} %>
+          
           ▼担当者
-          <input name="doer" value="<%= @task.doer %>">
+          <%# <input name="doer" value="<%= @task.doer %>
+          <%# <%= form.text_field :doer,{class: "input"} %>
+
+          <%= form.collection_select :doer, @user, :id, :name, {:include_blank => '選択してください'}, {class: 'input-new-selectbox'}%>
 
           ▼納期
-          <input name="deadline" type="date" value="<%= @task.deadline %>">
+          <%# <input name="deadline" type="date" value="<%= @task.deadline %>
+          <%= form.date_field :deadline,{class: "input"} %>
+
           ▼イメージ画像
-          <input name="image" type="file">
-  
-          <input type="submit" value="登録">
-          
+          <%# <input name="image" type="file"> %>
+          <%= form.file_field :image, {class: "input"} %>
+
+          <%# <input type="submit" value="登録"> %>
+          <%= form.submit "登録" , {class: "input"}%>
+         
         </div>
       </div>
     <% end %>

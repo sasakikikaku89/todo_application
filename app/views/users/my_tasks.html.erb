@@ -9,18 +9,18 @@
       <% end %>
     </div>
     <ul class="user-tabs">
-      <li class="active"><%= link_to("登録したタスク", "/users/#{@user.id}") %></li>
-      <li><%= link_to("担当のタスク", "/users/#{@user.id}/my_tasks") %></li>
+      <li><%= link_to("登録したタスク", "/users/#{@user.id}") %></li>
+      <li class="active"><%= link_to("担当のタスク", "/users/#{@user.id}/my_tasks") %></li>
     </ul>
     
-    <% @user.tasks.each do |task| %>
+    <% @my_tasks.each do |task| %>
       <div class="posts-index-item">
         <div class="post-left">
           <img src="<%= "/task_images/#{task.image_name}" %>">
         </div>
         <div class="post-right">
           <div class="post-user-name">
-            <%= link_to("担当者：#{User.find_by(id: task.doer).name}","/users/#{User.find_by(id: task.doer).id}") %>
+            <%= link_to("登録ユーザー：#{task.user.name}","/users/#{task.user.id}") %>
           </div>
           <%= link_to(task.content, "/tasks/#{task.id}") %>
         </div>

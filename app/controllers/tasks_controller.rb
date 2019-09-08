@@ -1,4 +1,4 @@
-    class TasksController < ApplicationController
+class TasksController < ApplicationController
         before_action :authenticate_user
 
     def index
@@ -23,15 +23,17 @@
 
     def new
         @task = Task.new
+        @user = User.all
     end
 
     def create
-        @task = Task.new(
-            user_id: @current_user.id,
-            content: params[:content],
-            doer: params[:doer],
-            deadline: params[:deadline],
-            image_name: "default_task.jpg")    
+        @task = Task.new(task_params)
+
+            # user_id: @current_user.id,
+            # content: params[:content],
+            # doer: params[:doer],
+            # deadline: params[:deadline],
+            # image_name: "default_task.jpg"            
 
         # if params[:image]
         #     @task.image_name = "#{@task.id}.jpg"
@@ -43,6 +45,10 @@
     
         if @task.save
             flash[:notice] = "タスクを登録しました"
+            if params[:doer]
+                @task.doer = params[:doer].to_i
+                @task.save
+            end
             if params[:image]
                 @task.image_name = "#{@task.id}.jpg"
                 @task.save 
@@ -57,24 +63,34 @@
 
     def edit
         @task = Task.find_by(id: params[:id])
+        @user = User.all
     end
 
     
     def update
         @task = Task.find_by(id: params[:id])    
-        @task.user_id = @current_user.id
-        @task.content = params[:content]
-        @task.doer = params[:doer]
-        @task.deadline = params[:deadline]
+        # @task.user_id = @current_user.id
+        # @task.content = params[:content]
+        # @task.doer = params[:doer]
+        # @task.deadline = params[:deadline]
         
-        if params[:image]
-            @task.image_name = "#{@task.id}.jpg"
-            image = params[:image]
-            File.binwrite("public/task_images/#{@task.image_name}", image.read)
-        end
-        
-        if @task.save
+        # if params[:image]
+        #     @task.image_name = "#{@task.id}.jpg"
+        #     image = params[:image]
+        #     File.binwrite("public/task_images/#{@task.image_name}", image.read)
+        # end    
+        if @task.update(task_params)
             flash[:notice] = "ユーザー情報を編集しました"
+            if params[:doer]
+                @task.doer = params[:doer].to_i
+                @task.save
+            end
+            if params[:image]
+                @task.image_name = "#{@task.id}.jpg"
+                @task.save 
+                image = params[:image]
+                File.binwrite("public/task_images/#{@task.image_name}",image.read)
+            end  
             redirect_to("/tasks/#{@task.id}")
         else
             render("tasks/edit")
@@ -88,4 +104,13 @@
             redirect_to("/tasks/index")
         end
     end
+
+    private
+    def task_params
+        params.require(:task).permit(:content,:doer,:deadline).merge(user_id: @current_user.id,image_name: "default_task.jpg")
+    end
+
+
+
+
 end
